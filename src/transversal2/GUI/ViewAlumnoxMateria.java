@@ -1,4 +1,3 @@
-
 package transversal2.GUI;
 
 import java.util.List;
@@ -19,6 +18,7 @@ public class ViewAlumnoxMateria extends javax.swing.JFrame {
             return false;
         }
     };
+
     public ViewAlumnoxMateria() {
         initComponents();
         armarCabecera();
@@ -33,14 +33,7 @@ public class ViewAlumnoxMateria extends javax.swing.JFrame {
 
     }
 
-    private void jcMateriaActionPerformed(java.awt.event.ActionEvent evt) {
-        if (cmbMateria.getSelectedIndex() >= 1) {
-            actualizarTabla();
-        } else if (cmbMateria.getSelectedIndex() == 0) {
-            borrarFilas();
-        }
-    }
-
+   
     private void cargarCombo() {
         cmbMateria.removeAllItems();
         Materia matVacia = new Materia();
@@ -67,7 +60,9 @@ public class ViewAlumnoxMateria extends javax.swing.JFrame {
         Materia mat = new Materia();
         if (cmbMateria.getSelectedIndex() >= 1) {
             mat = (Materia) cmbMateria.getSelectedItem();
+            
             List<Alumno> lista = xx.obtenerAlumnosPorMateria(mat.getIdMateria());
+            
             for (Alumno alumn : lista) {
                 modelo.addRow(new Object[]{
                     alumn.getDni(),
@@ -77,7 +72,7 @@ public class ViewAlumnoxMateria extends javax.swing.JFrame {
             }
         }
     }
-   
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -112,6 +107,11 @@ public class ViewAlumnoxMateria extends javax.swing.JFrame {
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 40, -1, -1));
 
         cmbMateria.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        cmbMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbMateriaActionPerformed(evt);
+            }
+        });
         getContentPane().add(cmbMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 131, 320, 40));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -144,38 +144,14 @@ public class ViewAlumnoxMateria extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-   
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ViewAlumnoxMateria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ViewAlumnoxMateria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ViewAlumnoxMateria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ViewAlumnoxMateria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void cmbMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMateriaActionPerformed
+        if (cmbMateria.getSelectedIndex() >= 1) {
+            actualizarTabla();
+        } else if (cmbMateria.getSelectedIndex() == 0) {
+            borrarFilas();
         }
-        //</editor-fold>
+    }//GEN-LAST:event_cmbMateriaActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ViewAlumnoxMateria().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<Materia> cmbMateria;
