@@ -153,6 +153,8 @@ public class ViewAlumno extends javax.swing.JFrame {
 
         txtNombre.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 240, 280, -1));
+
+        jDateChooser1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 290, 280, 30));
 
         radioActivo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N

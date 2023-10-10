@@ -102,8 +102,14 @@ public class ViewMateria extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("ESTADO");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, -1, -1));
+
+        txtID.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         getContentPane().add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 200, -1));
+
+        txtNombre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 250, -1));
+
+        txtAño.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         getContentPane().add(txtAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, 250, -1));
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/transversal2/sources/busqueda24.png"))); // NOI18N
