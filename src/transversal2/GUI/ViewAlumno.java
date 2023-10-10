@@ -1,4 +1,3 @@
-
 package transversal2.GUI;
 
 import java.time.Instant;
@@ -16,90 +15,9 @@ import transversal2.persistencia.AlumnoGestion;
 public class ViewAlumno extends javax.swing.JFrame {
 
     private static int contador = 0;
-    
+
     public ViewAlumno() {
         initComponents();
-    }
-
-   private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {
-        if (contador == 0) {
-            JOptionPane.showMessageDialog(null, "Debe buscar un alumno por DNI primero, para eliminarlo.");
-        } else {
-            if (txtDni.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "Debe completar el campo DNI");
-            } else {
-                AlumnoGestion adata = new AlumnoGestion();
-                Alumno alum = new Alumno();
-                try {
-                    int dni = Integer.parseInt(txtDni.getText());
-                    alum = adata.buscarAlumnoPorDni(dni);
-                    Object[] options = {"Aceptar", "Cancelar"};
-                    int choice = JOptionPane.showOptionDialog(this, "¿Está seguro que desea dar de baja al alumno: " + alum.stringEliminar(), "¡Atención!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, "Aceptar");
-                    if (choice == JOptionPane.YES_OPTION) {
-                        adata.eliminarAlumno(alum.getIdAlumno());
-                        contador = 0;
-                    }
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Solo puede ingresar números en el documento");
-                } catch (NullPointerException ex) {
-                    limpiar();
-                }
-                limpiar();
-            }
-        }
-    }
-
-    private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {
-        if (contador == 0) {
-            JOptionPane.showMessageDialog(this, "Debe buscar un alumno por DNI primero, antes de efectuar una modificación.");
-        } else {
-            if (txtDni.getText().equals("") || txtApellido.getText().equals("") || txtNombre.getText().equals("") || jDateChooser1.getDate() == null) {
-                JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
-            } else {
-                AlumnoGestion adata = new AlumnoGestion();
-                Alumno alum = new Alumno();
-                try {
-                    alum = adata.buscarAlumnoPorDni(Integer.parseInt(txtDni.getText()));
-                    alum.setDni(Integer.parseInt(txtDni.getText()));
-                    alum.setApellido(txtApellido.getText());
-                    alum.setNombre(txtNombre.getText());
-                    alum.setEstado(radioActivo.isSelected());
-                    alum.setFechaNacimiento(convertirLocalDate(jDateChooser1.getDate()));
-                    adata.modificarAlumno(alum);
-
-                    JOptionPane.showMessageDialog(this, "Alumno modificado exitosamente");
-                    limpiar();
-                    contador = 0;
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Solo puede ingresar números en el documento");
-                } catch (NullPointerException e) {
-                    JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
-                }
-            }
-        }
-    }
-
-    private void jbCargarActionPerformed(java.awt.event.ActionEvent evt) {
-        if (txtDni.getText().equals("") || txtApellido.getText().equals("") || txtNombre.getText().equals("") || jDateChooser1.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
-        } else {
-            AlumnoGestion adata = new AlumnoGestion();
-            Alumno alum = new Alumno();
-            try {
-                alum.setDni(Integer.parseInt(txtDni.getText()));
-                alum.setApellido(txtApellido.getText());
-                alum.setNombre(txtNombre.getText());
-                alum.setEstado(true);
-                alum.setFechaNacimiento(convertirLocalDate(jDateChooser1.getDate()));
-                adata.guardarAlumno(alum);
-                JOptionPane.showMessageDialog(this, "Alumno cargado exitosamente");
-                limpiar();
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Solo puede ingresar números en el documento");
-            } catch (NullPointerException e) {
-                JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
-            }
-        }
     }
 
     private void limpiar() {
@@ -111,15 +29,16 @@ public class ViewAlumno extends javax.swing.JFrame {
         contador = 0;
     }
 
-     public static LocalDate convertirLocalDate(Date d) {
-        LocalDate fn = null;
+    public static LocalDate convertirLocalDate(Date d) {
+        LocalDate xx = null;
         if (d != null) {
             Instant instant = d.toInstant();
             ZoneId zonaHoraria = ZoneId.systemDefault();
-            fn = instant.atZone(zonaHoraria).toLocalDate();
+            xx = instant.atZone(zonaHoraria).toLocalDate();
         }
-        return fn;
+        return xx;
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -242,6 +161,11 @@ public class ViewAlumno extends javax.swing.JFrame {
         getContentPane().add(radioActivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 330, -1, 50));
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/transversal2/sources/busqueda24.png"))); // NOI18N
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 140, 50, 30));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/transversal2/sources/alumnos.jpg"))); // NOI18N
@@ -256,7 +180,26 @@ public class ViewAlumno extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
-        // TODO add your handling code here:
+        if (txtDni.getText().equals("") || txtApellido.getText().equals("") || txtNombre.getText().equals("") || jDateChooser1.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
+        } else {
+            AlumnoGestion adata = new AlumnoGestion();
+            Alumno alum = new Alumno();
+            try {
+                alum.setDni(Integer.parseInt(txtDni.getText()));
+                alum.setApellido(txtApellido.getText());
+                alum.setNombre(txtNombre.getText());
+                alum.setEstado(true);
+                alum.setFechaNacimiento(convertirLocalDate(jDateChooser1.getDate()));
+                adata.guardarAlumno(alum);
+                JOptionPane.showMessageDialog(this, "Alumno cargado exitosamente");
+                limpiar();
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Solo puede ingresar números en el documento");
+            } catch (NullPointerException e) {
+                JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
+            }
+        }
     }//GEN-LAST:event_btnCargarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -264,48 +207,99 @@ public class ViewAlumno extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
+        if (contador == 0) {
+            JOptionPane.showMessageDialog(this, "Debe buscar un alumno por DNI primero, antes de efectuar una modificación.");
+        } else {
+            if (txtDni.getText().equals("") || txtApellido.getText().equals("") || txtNombre.getText().equals("") || jDateChooser1.getDate() == null) {
+                JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
+            } else {
+                AlumnoGestion adata = new AlumnoGestion();
+                Alumno alum = new Alumno();
+                try {
+                    alum = adata.buscarAlumnoPorDni(Integer.parseInt(txtDni.getText()));
+                    alum.setDni(Integer.parseInt(txtDni.getText()));
+                    alum.setApellido(txtApellido.getText());
+                    alum.setNombre(txtNombre.getText());
+                    alum.setEstado(radioActivo.isSelected());
+                    alum.setFechaNacimiento(convertirLocalDate(jDateChooser1.getDate()));
+                    adata.modificarAlumno(alum);
+
+                    JOptionPane.showMessageDialog(this, "Alumno modificado exitosamente");
+                    limpiar();
+                    contador = 0;
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Solo puede ingresar números en el documento");
+                } catch (NullPointerException e) {
+                    JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
+                }
+            }
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        if (contador == 0) {
+            JOptionPane.showMessageDialog(null, "Debe buscar un alumno por DNI primero, para eliminarlo.");
+        } else {
+            if (txtDni.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Debe completar el campo DNI");
+            } else {
+                AlumnoGestion adata = new AlumnoGestion();
+                Alumno alum = new Alumno();
+                try {
+                    int dni = Integer.parseInt(txtDni.getText());
+                    alum = adata.buscarAlumnoPorDni(dni);
+                    Object[] options = {"Aceptar", "Cancelar"};
+                    int choice = JOptionPane.showOptionDialog(this, "¿Está seguro que desea dar de baja al alumno: " + alum.stringEliminar(), "¡Atención!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, "Aceptar");
+                    if (choice == JOptionPane.YES_OPTION) {
+                        adata.eliminarAlumno(alum.getIdAlumno());
+                        contador = 0;
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Solo puede ingresar números en el documento");
+                } catch (NullPointerException ex) {
+                    limpiar();
+                }
+                limpiar();
+            }
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ViewAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ViewAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ViewAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ViewAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ViewAlumno().setVisible(true);
+        if (txtDni.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Debe completar el campo DNI");
+        } else {
+            AlumnoGestion adata = new AlumnoGestion();
+            Alumno alum = new Alumno();
+            try {
+                int dni = Integer.parseInt(txtDni.getText());
+                alum = adata.buscarAlumnoPorDni(dni);
+
+                if (alum != null) {
+                   
+                    txtApellido.setText(alum.getApellido());
+                    txtNombre.setText(alum.getNombre());
+                    jDateChooser1.setDate(convertirDate(alum.getFechaNacimiento()));
+                    radioActivo.setSelected(alum.isEstado());
+                 
+                    contador = 1;
+                } else {
+                    
+                    JOptionPane.showMessageDialog(this, "No se encontró ningún alumno con ese DNI");
+                    limpiar();
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Solo puede ingresar números en el campo DNI");
             }
-        });
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    public static Date convertirDate(LocalDate localDate) {
+    if (localDate != null) {
+        return Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
     }
+    return null;
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
