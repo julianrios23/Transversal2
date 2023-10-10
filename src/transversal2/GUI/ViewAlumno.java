@@ -192,7 +192,7 @@ public class ViewAlumno extends javax.swing.JFrame {
                 alum.setEstado(true);
                 alum.setFechaNacimiento(convertirLocalDate(jDateChooser1.getDate()));
                 adata.guardarAlumno(alum);
-                JOptionPane.showMessageDialog(this, "Alumno cargado exitosamente");
+               // JOptionPane.showMessageDialog(this, "Alumno cargado exitosamente");
                 limpiar();
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Solo puede ingresar números en el documento");
