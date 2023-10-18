@@ -50,11 +50,11 @@ public class ViewNotas extends javax.swing.JFrame {
 
     public void actCombo() {
         borrarFilas();
-        InscripcionGestion Idata = new InscripcionGestion();
+        InscripcionGestion xx = new InscripcionGestion();
         Alumno alum = new Alumno();
         if (cmbAlumnos.getSelectedItem() != null) {
             alum = (Alumno) cmbAlumnos.getSelectedItem();
-            List<Inscripcion> lista = Idata.obtenerInscripcionesPorAlumno(alum.getIdAlumno());
+            List<Inscripcion> lista = xx.obtenerInscripcionesPorAlumno(alum.getIdAlumno());
             for (Inscripcion inscrip : lista) {
                 modelo.addRow(new Object[]{
                     inscrip.getMateria().getIdMateria(),
@@ -150,12 +150,12 @@ public class ViewNotas extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (tabNotas.getSelectedRow() >= 0) {
-            InscripcionGestion Idata = new InscripcionGestion();
+            InscripcionGestion xx = new InscripcionGestion();
             Alumno alum = new Alumno();
             alum = (Alumno) cmbAlumnos.getSelectedItem();
             try {
-                double nota = pedirNumero();
-                Idata.actualizarNota(alum.getIdAlumno(), (int) tabNotas.getValueAt(tabNotas.getSelectedRow(), 0), nota);
+                double nota = pedirNota();
+                xx.actualizarNota(alum.getIdAlumno(), (int) tabNotas.getValueAt(tabNotas.getSelectedRow(), 0), nota);
             } catch (NullPointerException ex) {
             }
             carCombo();
@@ -176,7 +176,7 @@ public class ViewNotas extends javax.swing.JFrame {
         }
     }
 
-    private double pedirNumero() {
+    private double pedirNota() {
         double nota = 0;
         boolean notaValida = false;
 
